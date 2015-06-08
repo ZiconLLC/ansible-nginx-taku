@@ -1,0 +1,4 @@
+---
+
+nginx_taku_templates_dir: /etc/nginx_taku
+nginx_taku_sites_enabled_dir: /etc/nginx/sites-enabled

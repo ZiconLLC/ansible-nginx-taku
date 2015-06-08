@@ -1,0 +1,61 @@
+
+upstream admin-api-prod {
+	ip_hash;   # sticky session by client ip
+{% raw %}
+	{{range service "takuapi@taku" "any"}}
+	server {{.Address}}:{{.Port}} max_fails=1 fail_timeout=10s;
+	{{else}}
+	server localhost:3000;
+	{{end}}
+{% endraw %}
+}
+
+server {
+	listen       80; 
+	server_name     ~^admin\.takuapp\.com$ ;
+
+	root /srv/curate/current/build/dist/;
+	access_log  /var/log/nginx/admin.takuapp.com/admin_api-all json;
+	auth_basic "Authentication Required";
+	auth_basic_user_file /etc/nginx/curate_htpasswd;
+
+	location / {
+		try_files $uri $uri/ =404;	
+	}
+
+	location /admin {
+        if (-f $document_root/maintenance.html) {
+                    return 503;
+        }
+        add_header Cache-Control no-cache;
+        proxy_pass http://admin-api-prod;
+        proxy_set_header HOST $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+        proxy_connect_timeout 45s;
+        proxy_next_upstream error timeout invalid_header;
+        client_body_buffer_size 1024k;
+    }
+
+	location /admin/upload {
+		client_max_body_size 20M;
+		sendfile        off;
+		proxy_buffer_size       5M;
+		proxy_buffers 4 5M;
+		proxy_busy_buffers_size 5M;
+		proxy_pass http://admin-api-prod;
+		proxy_set_header HOST $http_host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	}
+
+	location /nginx_status {
+		stub_status on;
+		access_log   on;
+		allow 127.0.0.1;
+		deny all;
+	}
+}
+
+

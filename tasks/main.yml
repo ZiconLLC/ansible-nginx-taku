@@ -1,0 +1,9 @@
+---
+
+- name: dependencies
+  include: depend.yml
+
+- name: configure
+  include: config.yml
+
+

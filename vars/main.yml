@@ -1,0 +1,18 @@
+---
+
+nginx_taku_consul_template:
+  - name: admin
+    source: "{{nginx_taku_templates_dir}}/admin.takuapp.com.tmpl"
+    destination: "{{nginx_taku_sites_enabled_dir}}/admin.takuapp.com"
+    command: 'sudo sv reload nginx'
+
+  - name: api
+    source: "{{nginx_taku_templates_dir}}/api.takuapp.com.tmpl"
+    destination: "{{nginx_taku_sites_enabled_dir}}/api.takuapp.com"
+    command: 'sudo sv reload nginx'
+
+  - name: stage.api
+    source: "{{nginx_taku_templates_dir}}/stage.api.takuapp.com.tmpl"
+    destination: "{{nginx_taku_sites_enabled_dir}}/stage.api.takuapp.com"
+    command: 'sudo sv reload nginx'
+

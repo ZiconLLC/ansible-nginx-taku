@@ -1,0 +1,73 @@
+
+upstream cave-api-prod {
+{% raw %}
+	{{range service "takuapi@taku" "any"}}
+	server {{.Address}}:{{.Port}} max_fails=1 fail_timeout=10s;
+	{{else}}
+	server localhost:3000;
+	{{end}}
+{% endraw %}
+}
+
+upstream upload-api-prod {
+	ip_hash;   # sticky session by client ip
+
+{% raw %}
+	{{range service "takuapi@taku" "any"}}
+	server {{.Address}}:{{.Port}} max_fails=1 fail_timeout=10s;
+	{{else}}
+	server localhost:3000;
+	{{end}}
+{% endraw %}
+}
+
+
+server {
+	listen       80; 
+	server_name     ~^api\.takuapp\.com$ localhost;
+
+	root /srv/troll/api;
+	access_log  /var/log/nginx/api.takuapp.com/cave_api-all json;
+
+	location / {
+        if (-f $document_root/maintenance.html) {
+                    return 503;
+            }
+        add_header Cache-Control no-cache;
+        proxy_pass http://cave-api-prod;
+        proxy_set_header HOST $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+        proxy_connect_timeout 45s;
+        proxy_next_upstream error timeout invalid_header;
+        client_body_buffer_size 1024k;
+    }
+
+	location /upload {
+        if (-f $document_root/maintenance.html) {
+                    return 503;
+            }
+        add_header Cache-Control no-cache;
+        proxy_pass http://upload-api-prod;
+        proxy_set_header HOST $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+        proxy_connect_timeout 45s;
+        proxy_next_upstream error timeout invalid_header;
+        client_body_buffer_size 1024k;
+    }
+
+	location /admin {
+		deny all;
+	}
+
+	location /nginx_status {
+		stub_status on;
+		access_log   on;
+		allow 127.0.0.1;
+		deny all;
+	}
+}
+
