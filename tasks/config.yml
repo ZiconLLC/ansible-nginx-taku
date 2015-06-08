@@ -6,6 +6,16 @@
     path={{ nginx_taku_templates_dir }}
     mode=0755
 
+- name: config - sites log dirs
+  file:
+    state=directory
+    path="/var/log/nginx/{{ item }}"
+    mode=0755
+  with_items:
+    - api.takuapp.com
+    - admin.takuapp.com
+    - stage.api.takuapp.com
+
 - name: nginx configs
   template:
     src={{item}}.j2
