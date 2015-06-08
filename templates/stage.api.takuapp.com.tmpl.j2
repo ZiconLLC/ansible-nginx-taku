@@ -3,7 +3,7 @@ upstream cave-api-stage{
 	ip_hash;   # sticky session by client ip
 
 {% raw %}
-	{{range service "stage-takuapi@taku" "any"}}
+	{{range service "stage-taku-api@taku" "any"}}
 	server {{.Address}}:{{.Port}} max_fails=1 fail_timeout=10s;
 	{{else}}
 	server localhost:3000;
