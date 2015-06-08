@@ -24,7 +24,7 @@ upstream upload-api-prod {
 
 server {
 	listen       80; 
-	server_name     ~^api\.takuapp\.com$ localhost;
+	server_name  ~^api\.takuapp\.com$ ~^new.api\.takuapp\.com$ localhost;
 
 	root /srv/troll/api;
 	access_log  /var/log/nginx/api.takuapp.com/cave_api-all json;
