@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>iOS Link to <%= @app %></title>
+	<title>iOS Link to {{ nginx_taku_app_moniker }}</title>
 	<script src='//code.jquery.com/jquery-2.1.3.min.js'></script>
 	<script src='//mobileesp.googlecode.com/svn/JavaScript/mdetect.js'></script>
 	<script>
@@ -10,7 +10,7 @@
 		// the app will launch. If not, it does nothing (much)
 		$( document ).ready(function() {
 			if (typeof MobileEsp.DetectIos !== 'undefined' && MobileEsp.DetectIos()) {
-				$('body').append('<iframe class="detect" src="<%= @app %>://" />');
+				$('body').append('<iframe class="detect" src="{{ nginx_taku_app_moniker }}://" />');
 			}
 		});
 
@@ -19,10 +19,10 @@
 		$( window ).load(function() { 
 			setTimeout(function() {
 				if (typeof MobileEsp.DetectIos !== 'undefined' && MobileEsp.DetectIos()) {
-					window.location = "itms-apps://itunes.com/apps/<%= @app %>";
+					window.location = "itms-apps://itunes.com/apps/{{ nginx_taku_app_moniker }}";
 				// handled above
 				} else {
-					window.location = "<%= @home %>";
+					window.location = "{{ nginx_taku_app_home }}";
 				}
 			}, 700);	
 		})

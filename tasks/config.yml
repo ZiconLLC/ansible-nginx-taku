@@ -15,8 +15,9 @@
     - api.takuapp.com
     - admin.takuapp.com
     - stage.api.takuapp.com
+    - replywithtaku.me
 
-- name: nginx configs
+- name: nginx dynamic configs
   template:
     src={{item}}.j2
     dest={{ nginx_taku_templates_dir }}/{{item}}
@@ -35,5 +36,10 @@
   template:
     src=redirect-iOS.html.j2
     dest=/srv/replywithtaku.me/redirect-iOS.html
+
+- name: nginx static configs
+  template:
+    src=replywithtaku.me.j2
+    dest={{ nginx_taku_sites_enabled_dir }}/replywithtaku.me
 
 
