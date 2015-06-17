@@ -25,6 +25,7 @@
     - admin.takuapp.com.tmpl
     - api.takuapp.com.tmpl
     - stage.api.takuapp.com.tmpl
+  notify: restart consul-template
 
 - name: config - replywithtaku.me folder
   file:
