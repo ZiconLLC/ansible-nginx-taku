@@ -1,0 +1,7 @@
+---
+
+- name: depend - install
+  apt:
+    name=python-passlib
+    state=present
+    update_cache=yes
