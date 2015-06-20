@@ -27,7 +27,7 @@ server {
 	server_name  ~^api\.takuapp\.com$ ~^new.api\.takuapp\.com$ localhost;
 
 	root /srv/troll/api;
-	access_log  /var/log/nginx/api.takuapp.com/cave_api-all json;
+	access_log  /var/log/nginx/api.takuapp.com/access.json json;
 
 	location / {
         if (-f $document_root/maintenance.html) {

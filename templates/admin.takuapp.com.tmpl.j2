@@ -15,7 +15,7 @@ server {
 	server_name     ~^admin\.takuapp\.com$ ;
 
 	root /srv/curate/current/build/dist/;
-	access_log  /var/log/nginx/admin.takuapp.com/admin_api-all json;
+	access_log  /var/log/nginx/admin.takuapp.com/access.json json;
 	auth_basic "Authentication Required";
 	auth_basic_user_file /etc/nginx/curate_htpasswd;
 

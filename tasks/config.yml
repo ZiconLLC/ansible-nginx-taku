@@ -8,18 +8,26 @@
     path={{ nginx_taku_templates_dir }}
     mode=0755
 
-- name: config - sites log dirs
+- name: config - sites log dir
   file:
     state=directory
     path="/var/log/nginx/{{ item }}"
     mode=0755
-  with_items:
-    - api.takuapp.com
-    - admin.takuapp.com
-    - stage.api.takuapp.com
-    - replywithtaku.me
+  with_items: "{{ nginx_taku_sites }} "
 
-- name: nginx dynamic configs
+- name: config - sites srv dir
+  file:
+    state=directory
+    path=/srv/{{ item }}
+    mode=0755
+  with_items: "{{ nginx_taku_sites }} "
+
+- name: config - replywithtaku.me html
+  template:
+    src=redirect-iOS.html.j2
+    dest=/srv/replywithtaku.me/redirect-iOS.html
+
+- name: config - nginx dynamic configs
   template:
     src={{item}}.j2
     dest={{ nginx_taku_templates_dir }}/{{item}}
@@ -29,18 +37,7 @@
     - stage.api.takuapp.com.tmpl
   notify: restart consul-template
 
-- name: config - replywithtaku.me folder
-  file:
-    state=directory
-    path=/srv/replywithtaku.me
-    mode=0755
-
-- name: config - replywithtaku.me html
-  template:
-    src=redirect-iOS.html.j2
-    dest=/srv/replywithtaku.me/redirect-iOS.html
-
-- name: nginx static configs
+- name: config - nginx static configs
   template:
     src=replywithtaku.me.j2
     dest={{ nginx_taku_sites_enabled_dir }}/replywithtaku.me

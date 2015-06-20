@@ -16,7 +16,7 @@ server {
 	server_name     ~^stage\.api\.takuapp\.com$;
 
 	root /srv/cave/stage;
-	access_log  /var/log/nginx/stage.api.takuapp.com/cave_api_stage-all json;
+	access_log  /var/log/nginx/stage.api.takuapp.com/access.json json;
 
 	location / {
         if (-f $document_root/maintenance.html) {

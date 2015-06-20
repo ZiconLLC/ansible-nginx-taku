@@ -5,3 +5,10 @@ nginx_taku_sites_enabled_dir: /etc/nginx/sites-enabled
 
 nginx_taku_app_moniker: taku
 nginx_taku_app_home: http://www.takuapp.com
+
+nginx_taku_sites:
+  - api.takuapp.com
+  - admin.takuapp.com
+  - stage.api.takuapp.com
+  - replywithtaku.me
+

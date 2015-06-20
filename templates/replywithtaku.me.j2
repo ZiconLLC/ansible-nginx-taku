@@ -5,7 +5,7 @@ server {
 	root /srv/replywithtaku.me/;
 	index redirect-iOS.html;
 
-	access_log  /var/log/nginx/replywithtaku.me/access json;
+	access_log  /var/log/nginx/replywithtaku.me/access.json json;
 
 	location / {
 		try_files $uri $uri/ =404;
