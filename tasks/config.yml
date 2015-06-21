@@ -1,7 +1,5 @@
 ---
 
-- include_vars: auth.yml
-
 - name: config - templates
   file:
     state=directory
@@ -42,16 +40,9 @@
     src=replywithtaku.me.j2
     dest={{ nginx_taku_sites_enabled_dir }}/replywithtaku.me
 
-- name: setup htpasswd
-  htpasswd:
-    state=present
-    path=/etc/nginx/curate_htpasswd
-    name={{ nginx_taku_admin_user }}
-    password={{ nginx_taku_admin_password }}
-    owner=root
-    group=nginx
-    mode=0640
-
-- name: define routes for internet traffic from all private subnets to flow through a NAT in the same AZ
+- name: config - logstash settings
+  tags:
+    - logstash
   set_fact:
-    taku_nginx_logstash: '{{ lookup("template", "logstash.yml.j2") }}'
+    taku_nginx_logstash: '{{ lookup("template", "../templates/logstash.yml.j2") }}'
+

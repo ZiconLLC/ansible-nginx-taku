@@ -7,6 +7,7 @@ Vagrant.configure(VAGRANT_VERSION) do |config|
 		server.vm.hostname = "nginx-taku"
 		server.vm.provision :ansible do |ansible|
 			ansible.playbook = "test.yml"
+			ansible.skip_tags = "encrypted"
 		end
 	end
 end

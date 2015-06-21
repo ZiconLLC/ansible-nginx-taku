@@ -6,4 +6,8 @@
 - name: configure
   include: config.yml
 
+- name: configure encrypted info
+  include: encrypted-config.yml
+  tags:
+    - encrypted
 

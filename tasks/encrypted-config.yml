@@ -1,0 +1,14 @@
+---
+
+- include_vars: auth.yml
+
+- name: config - setup htpasswd
+  htpasswd:
+    state=present
+    path=/etc/nginx/curate_htpasswd
+    name={{ nginx_taku_admin_user }}
+    password={{ nginx_taku_admin_password }}
+    owner=root
+    group=nginx
+    mode=0640
+
