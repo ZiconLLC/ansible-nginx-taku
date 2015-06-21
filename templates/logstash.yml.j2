@@ -1,9 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-{% for site in nginx_taku_sites %}
-- paths:
-    - /var/log/nginx/{{ site }}/access.json
-  fields:
-    type: json
-    layer: nginx
-    site: {{ site }}
-{% endfor %}

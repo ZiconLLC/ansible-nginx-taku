@@ -40,9 +40,3 @@
     src=replywithtaku.me.j2
     dest={{ nginx_taku_sites_enabled_dir }}/replywithtaku.me
 
-- name: config - logstash settings
-  tags:
-    - logstash
-  set_fact:
-    taku_nginx_logstash: '{{ lookup("template", "../templates/logstash.yml.j2") }}'
-
