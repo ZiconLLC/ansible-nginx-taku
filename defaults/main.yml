@@ -12,10 +12,3 @@ nginx_taku_sites:
   - stage.api.takuapp.com
   - replywithtaku.me
 
-nginx_taku_logfiles:
-  - /var/log/nginx/api.takuapp.com/access.json
-  - /var/log/nginx/admin.takuapp.com/access.json
-  - /var/log/nginx/stage.api.takuapp.com/access.json
-  - /var/log/nginx/replywithtaku.me/access.json
-
-

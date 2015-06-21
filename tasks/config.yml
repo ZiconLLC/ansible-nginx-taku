@@ -51,3 +51,7 @@
     owner=root
     group=nginx
     mode=0640
+
+- name: define routes for internet traffic from all private subnets to flow through a NAT in the same AZ
+  set_fact:
+    taku_nginx_logstash: '{{ lookup("template", "logstash.yml.j2") }}'
