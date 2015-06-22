@@ -24,7 +24,11 @@
   template:
     src=redirect-iOS.html.j2
     dest=/srv/replywithtaku.me/redirect-iOS.html
-  notify: restart nginx
+
+- name: config - replywithtaku.me file
+  copy:
+    src=spinner.png
+    dest=/srv/replywithtaku.me/spinner.png
 
 - name: config - nginx dynamic configs
   template:
