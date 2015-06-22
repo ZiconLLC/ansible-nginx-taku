@@ -24,6 +24,7 @@
   template:
     src=redirect-iOS.html.j2
     dest=/srv/replywithtaku.me/redirect-iOS.html
+  notify: restart nginx
 
 - name: config - nginx dynamic configs
   template:
@@ -33,10 +34,11 @@
     - admin.takuapp.com.tmpl
     - api.takuapp.com.tmpl
     - stage.api.takuapp.com.tmpl
-  notify: restart consul-template
+  notify: restart nginx
 
 - name: config - nginx static configs
   template:
     src=replywithtaku.me.j2
     dest={{ nginx_taku_sites_enabled_dir }}/replywithtaku.me
+  notify: restart nginx
 
